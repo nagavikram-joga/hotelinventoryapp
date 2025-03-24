@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { Rooms, RoomsList } from './rooms';
 import { RoomsListComponent } from './rooms-list/rooms-list.component';
 import { NgIf, JsonPipe } from '@angular/common';
@@ -8,7 +8,7 @@ import { NgIf, JsonPipe } from '@angular/common';
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.scss',
 })
-export class RoomsComponent implements OnInit {
+export class RoomsComponent implements OnInit, DoCheck {
   hotelName_RC: string = 'Hilton Hotel';
   noOfRooms_RC: number = 10;
   hideRooms_RC: boolean = false;
@@ -103,5 +103,12 @@ export class RoomsComponent implements OnInit {
     // this.roomsList.push(room);   // Don't use it as it causes re-rendering as whole
     // instead use below
     this.roomsList_RC = [...this.roomsList_RC, room];
+  }
+
+  // Try to avoid ngDoCheck() as it will be executed for every event on the screen which causes performance issues
+  // Don't use ngDoCheck() & ngOnChange() together on same component as a single change is captured twice
+  // once by ngDoCheck() & once by ngOnChange()
+  ngDoCheck() {
+    console.log('ngDoCheck() from RC');
   }
 }
