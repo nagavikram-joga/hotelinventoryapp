@@ -1,19 +1,21 @@
-<h3>Welcome to {{ hotelName }}!</h3>
+<h3>Welcome to {{ hotelName_RC }}!</h3>
 <div>
   No. of Rooms :
-  <div [innerText]="noOfRooms"></div>
+  <div [innerText]="noOfRooms_RC"></div>
 </div>
 
 <!-- document.getElementById('noOfRooms').innerText = noOfRooms; -->
 
-<!-- {{ room ?? "No rooms" }} -->
-<div *ngIf="room.availableRooms > 0" [hidden]="hideRooms">
+<!-- {{ room ?? "No rooms" }} --> 
+<div *ngIf="room_RC.availableRooms > 0" [hidden]="hideRooms_RC">
   <hinv-rooms-list
-    [rooms]="roomsList"
+    [rooms_RLC]="roomsList_RC"
+    [title_RLC]="title_RC"
     (selectedRoom_RLC)="selectRoom_RC($event)"
   ></hinv-rooms-list>
 </div>
 <div *ngIf="selectedRoom_RC">
   {{ selectedRoom_RC | json }}
 </div>
-<button (click)="toggle()">Toggle</button><br /><br />
+<button (click)="addRoom_RC()">Add Room</button>
+<button (click)="toggle_RC()">Toggle</button><br /><br />

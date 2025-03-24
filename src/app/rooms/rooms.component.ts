@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Rooms, RoomsList } from './rooms';
 import { RoomsListComponent } from './rooms-list/rooms-list.component';
-import { NgIf,JsonPipe } from '@angular/common';
+import { NgIf, JsonPipe } from '@angular/common';
 @Component({
   selector: 'hinv-rooms',
-  imports: [RoomsListComponent, NgIf,JsonPipe],
+  imports: [RoomsListComponent, NgIf, JsonPipe],
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.scss',
 })
 export class RoomsComponent implements OnInit {
-  hotelName: string = 'Hilton Hotel';
-  noOfRooms: number = 10;
-  hideRooms: boolean = false;
-  roomsList: RoomsList[] = [];
-  selectedRoom_RC!: RoomsList ;
-  room: Rooms = {
+  hotelName_RC: string = 'Hilton Hotel';
+  noOfRooms_RC: number = 10;
+  hideRooms_RC: boolean = false;
+  title_RC: string = 'Room List';
+  roomsList_RC: RoomsList[] = [];
+  selectedRoom_RC?: RoomsList;
+  room_RC: Rooms = {
     availableRooms: 0,
     bookedRooms: 0,
     totalRooms: 0,
@@ -24,7 +25,7 @@ export class RoomsComponent implements OnInit {
 
   ngOnInit(): void {
     // ngOnInit() used for logic
-    this.roomsList = [
+    this.roomsList_RC = [
       {
         roomId: 100,
         roomType: 'Deluxe',
@@ -71,20 +72,36 @@ export class RoomsComponent implements OnInit {
         rating: 5,
       },
     ];
-    this.room = {
+    this.room_RC = {
       availableRooms: 3,
       bookedRooms: 5,
       totalRooms: 20,
     };
   }
 
-  toggle() {
-    this.hideRooms = !this.hideRooms;
-    
+  toggle_RC() {
+    this.hideRooms_RC = !this.hideRooms_RC;
+    this.title_RC = 'rooms list';
+    console.log('RC toggle() : ' + this.title_RC);
   }
 
-  selectRoom_RC(room: RoomsList) {
-    console.log(room);
-    this.selectedRoom_RC = room;
+  selectRoom_RC(room_RC: RoomsList) {
+    console.log(room_RC);
+    this.selectedRoom_RC = room_RC;
+  }
+
+  addRoom_RC() {
+    const room: RoomsList = {
+      roomId: 200,
+      roomType: 'Superme Deluxe',
+      amenities: 'AC, Wifi',
+      price: 25000,
+      roomNumber: 10,
+      checkInTime: new Date('29 Nov, 2025'),
+      rating: 4.2,
+    };
+    // this.roomsList.push(room);   // Don't use it as it causes re-rendering as whole
+    // instead use below
+    this.roomsList_RC = [...this.roomsList_RC, room];
   }
 }
