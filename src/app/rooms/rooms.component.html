@@ -1,0 +1,35 @@
+<h3>Welcome to {{ hotelName }}!</h3>
+<div [hidden]="hideRooms">
+  No. of Rooms :
+  <div [innerText]="noOfRooms"></div>
+</div>
+<button (click)="toggle()">Toggle</button><br /><br />
+<!-- document.getElementById('noOfRooms').innerText = noOfRooms; -->
+
+<!-- {{ room ?? "No rooms" }} -->
+<div *ngIf="room.availableRooms">Rooms List :</div>
+<div>
+  <table>
+    <tr [ngStyle]="{ 'background-color': 'green' }">
+      <th>Room No</th>
+      <th>Room Type</th>
+      <th>Amenities</th>
+      <th>Price</th>
+      <th>Check In Time</th>
+      <th>Rating</th>
+    </tr>
+    <tr
+      [ngClass]="e ? 'even' : 'odd'"
+      *ngFor="let room of roomsList; let i = index; let e = even"
+    >
+      <!-- <td>{{ room.roomNumber }}</td> -->
+      <td>{{ i + 1 }}</td>
+      <td>{{ room.roomType }}</td>
+      <td>{{ room.amenities | lowercase }}</td>
+      <td>{{ room.price | currency : "INR" }}</td>
+      <td>{{ room.checkInTime | date : "mediumDate" }}</td>
+      <td>{{ room.rating | number : "1.0-2" }}</td>
+      <!-- 1.2 resembles 1 digit before the decimal point and 2 digits after decimal point  -->
+    </tr>
+  </table>
+</div>
