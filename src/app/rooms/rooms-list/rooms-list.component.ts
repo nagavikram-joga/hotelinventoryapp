@@ -15,7 +15,7 @@ import {
   CurrencyPipe,
   DatePipe,
   DecimalPipe,
-  NgIf,
+  // NgIf,
   NgFor,
 } from '@angular/common';
 
@@ -28,7 +28,7 @@ import {
     LowerCasePipe,
     CurrencyPipe,
     DecimalPipe,
-    NgIf,
+    // NgIf,
     NgFor,
   ],
   templateUrl: './rooms-list.component.html',
@@ -48,7 +48,9 @@ export class RoomsListComponent implements OnChanges {
     this.selectedRoom_RLC.emit(room);
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('RLC ngOnChanges() : ' + changes['title_RLC'].currentValue);
+    console.log(
+      'ngOnChanges() from RLC : ' + changes['title_RLC'].currentValue
+    );
     if (changes['title_RLC']) {
       this.title_RLC = changes['title_RLC'].currentValue.toUpperCase();
     }

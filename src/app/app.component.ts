@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+// import { NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { RoomsComponent } from './rooms/rooms.component';
 // import { ButtonsModule } from 'ngx-bootstrap/buttons';
@@ -7,11 +7,9 @@ import { RoomsComponent } from './rooms/rooms.component';
 @Component({
   selector: 'hinv-root',
   imports: [
-    RouterOutlet,
+    // RouterOutlet,
     RoomsComponent,
-    NgSwitch,
-    NgSwitchCase,
-    NgSwitchDefault,
+    
   ],
   templateUrl: './app.component.html',
   // template:`<h1>Hello World from inline html</h1>
