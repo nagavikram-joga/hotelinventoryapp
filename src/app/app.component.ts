@@ -9,6 +9,8 @@ import {
 // import { NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { RoomsComponent } from './rooms/rooms.component';
+import { ContainerComponent } from './container/container.component';
+import { EmployeeComponent } from "./employee/employee.component";
 // import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 @Component({
@@ -16,7 +18,9 @@ import { RoomsComponent } from './rooms/rooms.component';
   imports: [
     // RouterOutlet,
     RoomsComponent,
-  ],
+    ContainerComponent,
+    EmployeeComponent
+],
   templateUrl: './app.component.html',
   // template:`<h1>Hello World from inline html</h1>
   // <p>This is Vikram</p>`,
