@@ -1,4 +1,11 @@
-import { Component } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 // import { NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { RoomsComponent } from './rooms/rooms.component';
@@ -9,7 +16,6 @@ import { RoomsComponent } from './rooms/rooms.component';
   imports: [
     // RouterOutlet,
     RoomsComponent,
-    
   ],
   templateUrl: './app.component.html',
   // template:`<h1>Hello World from inline html</h1>
@@ -17,7 +23,24 @@ import { RoomsComponent } from './rooms/rooms.component';
   styleUrl: './app.component.scss',
   // styles : [`h1{color:red}`],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit, OnInit {
   title = 'HotelInventoryApp';
   role = 'user';
+
+  // @ViewChild('user', { read: ViewContainerRef })
+  // viewContainerRef_appC!: ViewContainerRef;
+  ngAfterViewInit(): void {
+    //   //This will load RoomsComponent Dynamically
+    //   const componentRef =
+    //     this.viewContainerRef_appC.createComponent(RoomsComponent);
+    //   //We can access any property of the RoomsComponent
+    //   // Eg.
+    //   componentRef.instance.noOfRooms_RC = 20;
+  }
+
+  @ViewChild('name', { static: true }) name_eref_appC!: ElementRef;
+  ngOnInit(): void {
+    this.name_eref_appC.nativeElement.innerText =
+      'Welcome to Hotel Inventory App!';
+  }
 }

@@ -4,7 +4,9 @@ import {
   Component,
   DoCheck,
   OnInit,
+  QueryList,
   ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import { Rooms, RoomsList } from './rooms';
 import { RoomsListComponent } from './rooms-list/rooms-list.component';
@@ -17,7 +19,9 @@ import { HeaderComponent } from '../header/header.component';
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.scss',
 })
-export class RoomsComponent implements OnInit, DoCheck, AfterViewInit{
+export class RoomsComponent
+  implements OnInit, DoCheck, AfterViewInit, AfterViewChecked
+{
   hotelName_RC: string = 'Hilton Hotel';
   noOfRooms_RC: number = 10;
   hideRooms_RC: boolean = false;
@@ -134,4 +138,18 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit{
     // If error occurs here in development mode, it is absolutely fine because Angular runs change detection twice in development mode
     // If error occurs in production mode, then we have to check the error.
   }
+
+  //  Incase we have multiple same components on the screen, @ViewChild only takes first instance, and remaining
+  //  instances are not rendered
+  //  In that case we have to use @ViewChildren
+
+  // @ViewChildren(HeaderComponent) vc_roomsC!: QueryList<HeaderComponent>;
+  // ngAfterViewInit(): void {
+  //   this.vc_roomsC.first.title_headerC = 'Title';
+  //   this.vc_roomsC.forEach((element) => {
+  //     element.title_headerC = 'Title';
+  //   });
+  // }
+
+  ngAfterViewChecked(): void {}
 }

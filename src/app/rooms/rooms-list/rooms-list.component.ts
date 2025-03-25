@@ -49,7 +49,7 @@ export class RoomsListComponent implements OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     console.log(
-      'ngOnChanges() from RLC : ' + changes['title_RLC'].currentValue
+      'ngOnChanges() from RLC : ' + changes['title_RLC']?.currentValue
     );
     if (changes['title_RLC']) {
       this.title_RLC = changes['title_RLC'].currentValue.toUpperCase();
