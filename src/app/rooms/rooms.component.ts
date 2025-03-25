@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   Component,
   DoCheck,
+  OnDestroy,
   OnInit,
   QueryList,
   ViewChild,
@@ -24,7 +25,7 @@ export class RoomsComponent
 {
   hotelName_RC: string = 'Hilton Hotel';
   noOfRooms_RC: number = 10;
-  hideRooms_RC: boolean = false;
+  hideRooms_RC: boolean = true;
   title_RC: string = 'Room List';
   roomsList_RC: RoomsList[] = [];
   selectedRoom_RC?: RoomsList;
@@ -152,4 +153,6 @@ export class RoomsComponent
   // }
 
   ngAfterViewChecked(): void {}
+
+  
 }

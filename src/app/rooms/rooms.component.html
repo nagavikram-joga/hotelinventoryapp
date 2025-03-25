@@ -10,7 +10,7 @@
 <!-- document.getElementById('noOfRooms').innerText = noOfRooms; -->
 
 <!-- {{ room ?? "No rooms" }} -->
-<div *ngIf="room_RC.availableRooms > 0" [hidden]="hideRooms_RC">
+<div *ngIf="hideRooms_RC">
   <hinv-rooms-list
     [rooms_RLC]="roomsList_RC"
     [title_RLC]="title_RC"
