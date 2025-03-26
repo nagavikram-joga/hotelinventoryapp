@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   OnInit,
+  Optional,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
@@ -10,7 +11,8 @@ import {
 import { RouterOutlet } from '@angular/router';
 import { RoomsComponent } from './rooms/rooms.component';
 import { ContainerComponent } from './container/container.component';
-import { EmployeeComponent } from "./employee/employee.component";
+import { EmployeeComponent } from './employee/employee.component';
+import { LoggerService } from './logger.service';
 // import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 @Component({
@@ -19,8 +21,8 @@ import { EmployeeComponent } from "./employee/employee.component";
     // RouterOutlet,
     RoomsComponent,
     ContainerComponent,
-    EmployeeComponent
-],
+    EmployeeComponent,
+  ],
   templateUrl: './app.component.html',
   // template:`<h1>Hello World from inline html</h1>
   // <p>This is Vikram</p>`,
@@ -43,7 +45,12 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   @ViewChild('name', { static: true }) name_eref_appC!: ElementRef;
+
+  constructor(@Optional() private loggerService: LoggerService) {}
   ngOnInit(): void {
+    this.loggerService?.log(
+      'Logger service instantiated from app.component.ts'
+    );
     this.name_eref_appC.nativeElement.innerText =
       'Welcome to Hotel Inventory App!';
   }

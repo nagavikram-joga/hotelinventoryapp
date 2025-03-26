@@ -12,7 +12,7 @@
 <!-- {{ room ?? "No rooms" }} -->
 <div *ngIf="hideRooms_RC">
   <hinv-rooms-list
-    [rooms_RLC]="roomsList_RC"
+    [rooms_RLC]="roomsList_roomsC"
     [title_RLC]="title_RC"
     (selectedRoom_RLC)="selectRoom_RC($event)"
   ></hinv-rooms-list>
