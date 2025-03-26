@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  Inject,
   OnInit,
   Optional,
   ViewChild,
@@ -13,6 +14,9 @@ import { RoomsComponent } from './rooms/rooms.component';
 import { ContainerComponent } from './container/container.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { LoggerService } from './logger.service';
+import { APP_CONFIG, APP_SERVICE_CONFIG } from './appConfig/appconfig.service';
+import { LocalstorageToken } from '../localstoorage.token';
+
 // import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 @Component({
@@ -28,6 +32,12 @@ import { LoggerService } from './logger.service';
   // <p>This is Vikram</p>`,
   styleUrl: './app.component.scss',
   // styles : [`h1{color:red}`],
+  providers: [
+    {
+      provide: APP_SERVICE_CONFIG,
+      useValue: APP_CONFIG,
+    },
+  ],
 })
 export class AppComponent implements AfterViewInit, OnInit {
   title = 'HotelInventoryApp';
@@ -46,12 +56,16 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   @ViewChild('name', { static: true }) name_eref_appC!: ElementRef;
 
-  constructor(@Optional() private loggerService: LoggerService) {}
+  constructor(
+    @Optional() private loggerService: LoggerService,
+    @Inject(LocalstorageToken) private localStorage: Storage
+  ) {}
   ngOnInit(): void {
     this.loggerService?.log(
       'Logger service instantiated from app.component.ts'
     );
     this.name_eref_appC.nativeElement.innerText =
       'Welcome to Hotel Inventory App!';
+    this.localStorage.setItem('name', 'Hilton Hotel!');
   }
 }
