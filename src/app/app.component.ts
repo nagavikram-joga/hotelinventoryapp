@@ -66,6 +66,6 @@ export class AppComponent implements AfterViewInit, OnInit {
     );
     this.name_eref_appC.nativeElement.innerText =
       'Welcome to Hotel Inventory App!';
-    this.localStorage.setItem('name', 'Hilton Hotel!');
+    this.localStorage.setItem('AppName', 'Hilton Hotel!');
   }
 }

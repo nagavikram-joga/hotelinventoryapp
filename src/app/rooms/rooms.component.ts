@@ -15,6 +15,7 @@ import { RoomsListComponent } from './rooms-list/rooms-list.component';
 import { NgIf, JsonPipe } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { RoomsService } from './services/rooms.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'hinv-rooms',
@@ -31,13 +32,21 @@ export class RoomsComponent
   noOfRooms_RC: number = 10;
   hideRooms_RC: boolean = true;
   title_RC: string = 'Room List';
-  roomsList_roomsC: RoomsList[] = [];
+  roomsList_roomsC!: RoomsList[];
   selectedRoom_RC?: RoomsList;
   room_RC: Rooms = {
     availableRooms: 0,
     bookedRooms: 0,
     totalRooms: 0,
   };
+  stream_roomsC = new Observable<string>((observer) => {
+    observer.next('user1');
+    observer.next('user2');
+    observer.next('user3');
+    observer.next('user4');
+    observer.complete();
+    // observer.error('error');
+  });
 
   //  Always make services private, and do not inject a component directly.
   constructor(@SkipSelf() private roomsService_roomsC: RoomsService) {
@@ -45,9 +54,26 @@ export class RoomsComponent
     console.log('Room service started ...');
   }
 
+  // ngOnInit() used for logic
   ngOnInit(): void {
-    // ngOnInit() used for logic
-    this.roomsList_roomsC = this.roomsService_roomsC.getRooms();
+    //We can fetch data by using stream of observable
+
+    // this.stream_roomsC.subscribe((data) => {
+    //   console.log(data);
+    // });
+
+    //The above one can also be written as below
+    this.stream_roomsC.subscribe({
+      next: (value) => console.log(value),
+      complete: () => console.log('completed'),
+      error: (err) => console.log(err),
+    });
+
+    // We can fetch data by using service http request
+    // this.roomsService_roomsC.getRooms().subscribe((rooms) => {
+    //   this.roomsList_roomsC = rooms;
+    // });
+    // console.log(this.roomsService_roomsC.getRooms());
 
     this.room_RC = {
       availableRooms: 3,
@@ -70,12 +96,14 @@ export class RoomsComponent
 
   addRoom_RC() {
     const room: RoomsList = {
-      roomId: 200,
+      // roomId: 200,
       roomType: 'Superme Deluxe',
       amenities: 'AC, Wifi',
       price: 25000,
-      roomNumber: 10,
-      checkInTime: new Date('29 Nov, 2025'),
+      roomNumber: '10',
+      photos: '',
+      checkinTime: new Date('29 Nov, 2025'),
+      checkoutTime: new Date('30-Nov-2025'),
       rating: 4.2,
     };
     // this.roomsList.push(room);   // Don't use it as it causes re-rendering as whole
