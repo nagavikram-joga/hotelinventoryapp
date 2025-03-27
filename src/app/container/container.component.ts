@@ -15,7 +15,7 @@ export class ContainerComponent implements AfterContentInit {
   constructor(@Host() private roomsService: RoomsService) {}
   @ContentChild(EmployeeComponent) employee_containerC!: EmployeeComponent;
   ngAfterContentInit(): void {
-    console.log(this.employee_containerC);
+    // console.log(this.employee_containerC);
     this.employee_containerC.empName = 'John Wick';
   }
 }

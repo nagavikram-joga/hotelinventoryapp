@@ -11,6 +11,6 @@ import { RoomsService } from '../rooms/services/rooms.service';
 export class EmployeeComponent {
   empName: string = 'John';
   constructor(@Self() private roomService_empC: RoomsService) {
-    console.log('Rooms service started in Employee');
+    // console.log('Rooms service started in Employee');
   }
 }

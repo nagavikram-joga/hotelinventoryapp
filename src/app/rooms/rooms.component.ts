@@ -51,7 +51,7 @@ export class RoomsComponent
   //  Always make services private, and do not inject a component directly.
   constructor(@SkipSelf() private roomsService_roomsC: RoomsService) {
     // constructor is used for services injection & it shouldn't have any blocking code in it
-    console.log('Room service started ...');
+    // console.log('Room service started ...');
   }
 
   // ngOnInit() used for logic
@@ -63,16 +63,16 @@ export class RoomsComponent
     // });
 
     //The above one can also be written as below
-    this.stream_roomsC.subscribe({
-      next: (value) => console.log(value),
-      complete: () => console.log('completed'),
-      error: (err) => console.log(err),
-    });
+    // this.stream_roomsC.subscribe({
+    //   next: (value) => console.log(value),
+    //   complete: () => console.log('completed'),
+    //   error: (err) => console.log(err),
+    // });
 
     // We can fetch data by using service http request
-    // this.roomsService_roomsC.getRooms().subscribe((rooms) => {
-    //   this.roomsList_roomsC = rooms;
-    // });
+    this.roomsService_roomsC.getRooms().subscribe((rooms) => {
+      this.roomsList_roomsC = rooms;
+    });
     // console.log(this.roomsService_roomsC.getRooms());
 
     this.room_RC = {
@@ -94,7 +94,7 @@ export class RoomsComponent
     this.selectedRoom_RC = room_RC;
   }
 
-  addRoom_RC() {
+  addRoom_roomsC() {
     const room: RoomsList = {
       // roomId: 200,
       roomType: 'Superme Deluxe',
@@ -106,16 +106,42 @@ export class RoomsComponent
       checkoutTime: new Date('30-Nov-2025'),
       rating: 4.2,
     };
+    this.roomsService_roomsC.addRoom(room).subscribe((data) => {
+      this.roomsList_roomsC = data;
+    });
     // this.roomsList.push(room);   // Don't use it as it causes re-rendering as whole
     // instead use below
-    this.roomsList_roomsC = [...this.roomsList_roomsC, room];
+    // this.roomsList_roomsC = [...this.roomsList_roomsC, room];
+  }
+
+  updateRoom_roomsC() {
+    const room: RoomsList = {
+      // roomId: 200,
+      roomType: ' Suite',
+      amenities: 'AC, Wifi',
+      price: 25000,
+      roomNumber: '1',
+      photos: '',
+      checkinTime: new Date('29 Nov, 2025'),
+      checkoutTime: new Date('30-Nov-2025'),
+      rating: 4.2,
+    };
+    this.roomsService_roomsC.updateRoom(room).subscribe((data) => {
+      this.roomsList_roomsC = data;
+    });
+  }
+
+  deleteRoom_roomsC() {
+    this.roomsService_roomsC.deleteRoom('3').subscribe((data) => {
+      this.roomsList_roomsC = data;
+    });
   }
 
   // Try to avoid ngDoCheck() as it will be executed for every event on the screen which causes performance issues
   // Don't use ngDoCheck() & ngOnChange() together on same component as a single change is captured twice
   // once by ngDoCheck() & once by ngOnChange()
   ngDoCheck() {
-    console.log('ngDoCheck() from RC');
+    // console.log('ngDoCheck() from RC');
   }
 
   @ViewChild(HeaderComponent)
@@ -123,7 +149,7 @@ export class RoomsComponent
   // Here static is by default false, then we can get response only in ngAfterViewInit()
   // If we make static to true, then we can get response in both ngOnInit() & ngAfterViewInit()
   ngAfterViewInit(): void {
-    console.log('ngAfterViewInit() from RC');
+    // console.log('ngAfterViewInit() from RC');
     // console.log(this.headerComponent_RC);
     this.headerComponent_roomsC.title_headerC = 'Hotel Inventory App ';
     // If error occurs here in development mode, it is absolutely fine because Angular runs change detection twice in development mode

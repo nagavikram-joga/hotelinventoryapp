@@ -17,11 +17,23 @@ export class RoomsService {
     private http: HttpClient
   ) {
     // console.log(environment.apiUrl);
-    console.log(appServiceConfig);
-    console.log('Rooms service initialized..');
+    // console.log(appServiceConfig);
+    // console.log('Rooms service initialized..');
   }
 
-  getRooms() : Observable<RoomsList[]>{
+  getRooms(): Observable<RoomsList[]> {
     return this.http.get<RoomsList[]>('/api/rooms');
+  }
+  addRoom(room: RoomsList) {
+    return this.http.post<RoomsList[]>('/api/rooms', room);
+  }
+
+  updateRoom(room: RoomsList) {
+    // console.log('Update room is called');
+    return this.http.put<RoomsList[]>(`/api/rooms/${room.roomNumber}`, room);
+  }
+  deleteRoom(id: string) {
+    console.log('Delete Room called in RoomsService');
+    return this.http.delete<RoomsList[]>(`api/rooms/${id}`);
   }
 }

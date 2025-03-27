@@ -49,14 +49,14 @@ export class RoomsListComponent implements OnChanges, OnDestroy {
     this.selectedRoom_RLC.emit(room);
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(
-      'ngOnChanges() from RLC : ' + changes['title_RLC']?.currentValue
-    );
+    // console.log(
+    //   'ngOnChanges() from RLC : ' + changes['title_RLC']?.currentValue
+    // );
     if (changes['title_RLC']) {
       this.title_RLC = changes['title_RLC'].currentValue.toUpperCase();
     }
   }
   ngOnDestroy(): void {
-    console.log('ngOnDestroy() from rooms-list.component');
+    // console.log('ngOnDestroy() from rooms-list.component');
   }
 }
