@@ -16,7 +16,7 @@ import { RoomsListComponent } from './rooms-list/rooms-list.component';
 import { NgIf, JsonPipe, AsyncPipe } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { RoomsService } from './services/rooms.service';
-import { catchError, Observable, of, Subject, Subscription } from 'rxjs';
+import { catchError, map, Observable, of, Subject, Subscription } from 'rxjs';
 import { APP_SERVICE_CONFIG } from '../appConfig/appconfig.service';
 import { HttpEventType } from '@angular/common/http';
 
@@ -46,9 +46,12 @@ export class RoomsComponent
     totalRooms: 0,
   };
   totalBytes!: number;
+
+  // All variables ending with $ are streams of observables
   rooms$!: Observable<RoomsList[]>;
   error$ = new Subject<string>();
   getError$ = this.error$.asObservable();
+  roomsCount$!: Observable<number>;
 
   // stream_roomsC = new Observable<string>((observer) => {
   //   observer.next('user1');
@@ -99,9 +102,15 @@ export class RoomsComponent
       })
     );
 
+    // RxJs Map operator
+    this.roomsCount$ = this.roomsService_roomsC.getRooms$.pipe(
+      map((rooms) => rooms.length)
+    );
+    console.log(this.roomsCount$);
+
     // console.log(this.headerComponent_RC);
 
-    this.roomsService_roomsC.getPhotos().subscribe((event) => {
+    this.roomsService_roomsC.getPhotos$.subscribe((event) => {
       switch (event.type) {
         case HttpEventType.Sent:
           console.log('Request has been made');

@@ -4,8 +4,8 @@
 <hinv-header></hinv-header> -->
 <!-- {{ rooms$ | async | json }} -->
 <div>
-  No. of Rooms :
-  <div [innerText]="noOfRooms_RC"></div>
+  No. of Rooms : {{ roomsCount$ | async }}
+  <!-- <div [innerText]="noOfRooms_RC"></div> -->
 </div>
 
 <!-- document.getElementById('noOfRooms').innerText = noOfRooms; -->

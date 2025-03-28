@@ -14,6 +14,7 @@ export class RoomsService {
   roomsList_roomsS: RoomsList[] = [];
 
   getRooms$: Observable<RoomsList[]>;
+  getPhotos$: Observable<any>;
 
   constructor(
     @Inject(APP_SERVICE_CONFIG) appServiceConfig: AppConfig,
@@ -21,6 +22,10 @@ export class RoomsService {
   ) {
     this.getRooms$ = this.http
       .get<RoomsList[]>('/api/rooms')
+      .pipe(shareReplay(1));
+
+    this.getPhotos$ = this.http
+      .get('https://jsonplaceholder.typicode.com/photos')
       .pipe(shareReplay(1));
     // console.log(appServiceConfig);
     // console.log('Rooms service initialized..');
