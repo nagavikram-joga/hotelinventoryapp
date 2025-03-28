@@ -17,6 +17,8 @@ import { LoggerService } from './logger.service';
 import { APP_CONFIG, APP_SERVICE_CONFIG } from './appConfig/appconfig.service';
 import { LocalstorageToken } from '../localstoorage.token';
 import { RoomsService } from './rooms/services/rooms.service';
+import { requestInterceptor } from './request.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
@@ -37,6 +39,11 @@ import { RoomsService } from './rooms/services/rooms.service';
     {
       provide: APP_SERVICE_CONFIG,
       useValue: APP_CONFIG,
+    },
+    {
+      provide: requestInterceptor,
+      useValue: HTTP_INTERCEPTORS,
+      multi: true,
     },
     RoomsService,
   ],

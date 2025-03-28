@@ -106,7 +106,7 @@ export class RoomsComponent
     this.roomsCount$ = this.roomsService_roomsC.getRooms$.pipe(
       map((rooms) => rooms.length)
     );
-    console.log(this.roomsCount$);
+    // console.log(this.roomsCount$);
 
     // console.log(this.headerComponent_RC);
 
@@ -126,7 +126,7 @@ export class RoomsComponent
           console.log('Request has been completed');
           break;
         default:
-          console.log('Event not captured');
+          
       }
     });
   }

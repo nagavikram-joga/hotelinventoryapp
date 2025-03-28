@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { RoomsList } from '../rooms';
 import { AppConfig } from '../../appConfig/appconfig.interface';
 import { APP_SERVICE_CONFIG } from '../../appConfig/appconfig.service';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { shareReplay } from 'rxjs';
 // import { environment } from '../../../environments/environment';
@@ -20,8 +20,18 @@ export class RoomsService {
     @Inject(APP_SERVICE_CONFIG) appServiceConfig: AppConfig,
     private http: HttpClient
   ) {
+
+    // We are adding a new header to the request
+    // But we have to do this for every request
+    // So we will use HttpInterceptor to do this
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   token: '1287eruwehjdsfj',
+    // });
     this.getRooms$ = this.http
-      .get<RoomsList[]>('/api/rooms')
+      .get<RoomsList[]>('/api/rooms', {
+        // headers: headers,
+      })
       .pipe(shareReplay(1));
 
     this.getPhotos$ = this.http
@@ -43,7 +53,15 @@ export class RoomsService {
   }
 
   getRooms(): Observable<RoomsList[]> {
-    return this.http.get<RoomsList[]>('/api/rooms');
+    // Writing Http Headers
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      token: '1287eruwehjdsfj',
+    });
+
+    return this.http.get<RoomsList[]>('/api/rooms', {
+      headers: headers,
+    });
   }
   addRoom(room: RoomsList) {
     return this.http.post<RoomsList[]>('/api/rooms', room);
