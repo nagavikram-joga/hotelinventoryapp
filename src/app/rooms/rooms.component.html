@@ -25,3 +25,7 @@
 <button (click)="toggle_RC()">Toggle</button><br />
 <button (click)="updateRoom_roomsC()">Update Room</button><br />
 <button (click)="deleteRoom_roomsC()">Delete</button><br />
+{{ getError$ | async }}
+<div *ngIf="getError$ | async as errorMessage" class="error">
+  {{ errorMessage }}
+</div>

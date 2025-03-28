@@ -16,13 +16,13 @@ import { RoomsListComponent } from './rooms-list/rooms-list.component';
 import { NgIf, JsonPipe, AsyncPipe } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { RoomsService } from './services/rooms.service';
-import { Observable, Subscription } from 'rxjs';
+import { catchError, Observable, of, Subject, Subscription } from 'rxjs';
 import { APP_SERVICE_CONFIG } from '../appConfig/appconfig.service';
 import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'hinv-rooms',
-  imports: [RoomsListComponent, NgIf, JsonPipe, HeaderComponent,AsyncPipe],
+  imports: [RoomsListComponent, NgIf, JsonPipe, HeaderComponent, AsyncPipe],
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.scss',
 })
@@ -46,8 +46,9 @@ export class RoomsComponent
     totalRooms: 0,
   };
   totalBytes!: number;
-
   rooms$!: Observable<RoomsList[]>;
+  error$ = new Subject<string>();
+  getError$ = this.error$.asObservable();
 
   // stream_roomsC = new Observable<string>((observer) => {
   //   observer.next('user1');
@@ -85,14 +86,19 @@ export class RoomsComponent
     // });
     // console.log(this.roomsService_roomsC.getRooms());
 
-    this.rooms$ = this.roomsService_roomsC.getRooms$;
+    // Ensure getError$ is set up
+    // this.getError$.subscribe((errorMessage: string) => {
+    //   console.error('Error received:', errorMessage); // Log or handle the error
+    // });
 
+    this.rooms$ = this.roomsService_roomsC.getRooms$.pipe(
+      catchError((error) => {
+        console.log('Error : ' + error.message);
+        this.error$.next(error.message);
+        return of([]);
+      })
+    );
 
-    this.room_RC = {
-      availableRooms: 3,
-      bookedRooms: 5,
-      totalRooms: 20,
-    };
     // console.log(this.headerComponent_RC);
 
     this.roomsService_roomsC.getPhotos().subscribe((event) => {
