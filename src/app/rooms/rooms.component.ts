@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   Component,
   DoCheck,
+  Inject,
   OnDestroy,
   OnInit,
   QueryList,
@@ -16,6 +17,8 @@ import { NgIf, JsonPipe } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { RoomsService } from './services/rooms.service';
 import { Observable } from 'rxjs';
+import { APP_SERVICE_CONFIG } from '../appConfig/appconfig.service';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'hinv-rooms',
@@ -23,6 +26,7 @@ import { Observable } from 'rxjs';
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.scss',
 })
+
 //
 //
 export class RoomsComponent
@@ -39,14 +43,16 @@ export class RoomsComponent
     bookedRooms: 0,
     totalRooms: 0,
   };
-  stream_roomsC = new Observable<string>((observer) => {
-    observer.next('user1');
-    observer.next('user2');
-    observer.next('user3');
-    observer.next('user4');
-    observer.complete();
-    // observer.error('error');
-  });
+  totalBytes!: number;
+
+  // stream_roomsC = new Observable<string>((observer) => {
+  //   observer.next('user1');
+  //   observer.next('user2');
+  //   observer.next('user3');
+  //   observer.next('user4');
+  //   observer.complete();
+  //   // observer.error('error');
+  // });
 
   //  Always make services private, and do not inject a component directly.
   constructor(@SkipSelf() private roomsService_roomsC: RoomsService) {
@@ -70,7 +76,7 @@ export class RoomsComponent
     // });
 
     // We can fetch data by using service http request
-    this.roomsService_roomsC.getRooms().subscribe((rooms) => {
+    this.roomsService_roomsC.getRooms$.subscribe((rooms) => {
       this.roomsList_roomsC = rooms;
     });
     // console.log(this.roomsService_roomsC.getRooms());
@@ -81,6 +87,26 @@ export class RoomsComponent
       totalRooms: 20,
     };
     // console.log(this.headerComponent_RC);
+
+    this.roomsService_roomsC.getPhotos().subscribe((event) => {
+      switch (event.type) {
+        case HttpEventType.Sent:
+          console.log('Request has been made');
+          break;
+        case HttpEventType.ResponseHeader:
+          console.log('Response header has been received');
+          break;
+        case HttpEventType.DownloadProgress:
+          this.totalBytes = event.loaded;
+          console.log(this.totalBytes );
+          break;
+        case HttpEventType.Response:
+          console.log('Request has been completed');
+          break;
+        default:
+          console.log('Event not captured');
+      }
+    });
   }
 
   toggle_RC() {

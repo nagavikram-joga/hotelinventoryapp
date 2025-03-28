@@ -2,8 +2,9 @@ import { Inject, Injectable } from '@angular/core';
 import { RoomsList } from '../rooms';
 import { AppConfig } from '../../appConfig/appconfig.interface';
 import { APP_SERVICE_CONFIG } from '../../appConfig/appconfig.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
+import { shareReplay } from 'rxjs';
 // import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -12,13 +13,28 @@ import { Observable } from 'rxjs/internal/Observable';
 export class RoomsService {
   roomsList_roomsS: RoomsList[] = [];
 
+  getRooms$: Observable<RoomsList[]>;
+
   constructor(
     @Inject(APP_SERVICE_CONFIG) appServiceConfig: AppConfig,
     private http: HttpClient
   ) {
-    // console.log(environment.apiUrl);
+    this.getRooms$ = this.http
+      .get<RoomsList[]>('/api/rooms')
+      .pipe(shareReplay(1));
     // console.log(appServiceConfig);
     // console.log('Rooms service initialized..');
+  }
+
+  getPhotos() {
+    const request = new HttpRequest(
+      'GET',
+      'https://jsonplaceholder.typicode.com/photos',
+      {
+        reportProgress: true,
+      }
+    );
+    return this.http.request(request);
   }
 
   getRooms(): Observable<RoomsList[]> {
