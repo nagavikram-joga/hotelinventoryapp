@@ -13,16 +13,16 @@ import {
 } from '@angular/core';
 import { Rooms, RoomsList } from './rooms';
 import { RoomsListComponent } from './rooms-list/rooms-list.component';
-import { NgIf, JsonPipe } from '@angular/common';
+import { NgIf, JsonPipe, AsyncPipe } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { RoomsService } from './services/rooms.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { APP_SERVICE_CONFIG } from '../appConfig/appconfig.service';
 import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'hinv-rooms',
-  imports: [RoomsListComponent, NgIf, JsonPipe, HeaderComponent],
+  imports: [RoomsListComponent, NgIf, JsonPipe, HeaderComponent,AsyncPipe],
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.scss',
 })
@@ -32,6 +32,8 @@ import { HttpEventType } from '@angular/common/http';
 export class RoomsComponent
   implements OnInit, DoCheck, AfterViewInit, AfterViewChecked
 {
+  subsciption!: Subscription;
+
   hotelName_RC: string = 'Hilton Hotel';
   noOfRooms_RC: number = 10;
   hideRooms_RC: boolean = true;
@@ -44,6 +46,8 @@ export class RoomsComponent
     totalRooms: 0,
   };
   totalBytes!: number;
+
+  rooms$!: Observable<RoomsList[]>;
 
   // stream_roomsC = new Observable<string>((observer) => {
   //   observer.next('user1');
@@ -76,10 +80,13 @@ export class RoomsComponent
     // });
 
     // We can fetch data by using service http request
-    this.roomsService_roomsC.getRooms$.subscribe((rooms) => {
-      this.roomsList_roomsC = rooms;
-    });
+    // this.roomsService_roomsC.getRooms$.subscribe((rooms) => {
+    //   this.roomsList_roomsC = rooms;
+    // });
     // console.log(this.roomsService_roomsC.getRooms());
+
+    this.rooms$ = this.roomsService_roomsC.getRooms$;
+
 
     this.room_RC = {
       availableRooms: 3,
@@ -98,7 +105,7 @@ export class RoomsComponent
           break;
         case HttpEventType.DownloadProgress:
           this.totalBytes = event.loaded;
-          console.log(this.totalBytes );
+          console.log(this.totalBytes);
           break;
         case HttpEventType.Response:
           console.log('Request has been completed');
@@ -195,4 +202,11 @@ export class RoomsComponent
   // }
 
   ngAfterViewChecked(): void {}
+
+  ngOnDestroy(): void {
+    // We are un-subscribing manually to avoid memory leaks
+    if (this.subsciption) {
+      this.subsciption.unsubscribe();
+    }
+  }
 }

@@ -1,7 +1,8 @@
 <!-- <h3>Welcome to {{ hotelName_RC }}!</h3> -->
 <hinv-header></hinv-header>
-<hinv-header></hinv-header>
-<hinv-header></hinv-header>
+<!-- <hinv-header></hinv-header>
+<hinv-header></hinv-header> -->
+<!-- {{ rooms$ | async | json }} -->
 <div>
   No. of Rooms :
   <div [innerText]="noOfRooms_RC"></div>
@@ -10,9 +11,9 @@
 <!-- document.getElementById('noOfRooms').innerText = noOfRooms; -->
 
 <!-- {{ room ?? "No rooms" }} -->
-<div *ngIf="hideRooms_RC">
+<div *ngIf="hideRooms_RC && (rooms$ | async) as roomsList">
   <hinv-rooms-list
-    [rooms_RLC]="roomsList_roomsC"
+    [rooms_RLC]="roomsList"
     [title_RLC]="title_RC"
     (selectedRoom_RLC)="selectRoom_RC($event)"
   ></hinv-rooms-list>

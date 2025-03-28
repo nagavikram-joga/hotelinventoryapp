@@ -37,7 +37,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoomsListComponent implements OnChanges, OnDestroy {
-  @Input() rooms_RLC: RoomsList[] = [];
+  @Input() rooms_RLC: RoomsList[] | null = [];
   @Input() room_RLC: Rooms = {
     availableRooms: 0,
     bookedRooms: 0,
