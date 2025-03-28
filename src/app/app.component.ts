@@ -16,6 +16,7 @@ import { EmployeeComponent } from './employee/employee.component';
 import { LoggerService } from './logger.service';
 import { APP_CONFIG, APP_SERVICE_CONFIG } from './appConfig/appconfig.service';
 import { LocalstorageToken } from '../localstoorage.token';
+import { RoomsService } from './rooms/services/rooms.service';
 
 // import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
@@ -37,6 +38,7 @@ import { LocalstorageToken } from '../localstoorage.token';
       provide: APP_SERVICE_CONFIG,
       useValue: APP_CONFIG,
     },
+    RoomsService,
   ],
 })
 export class AppComponent implements AfterViewInit, OnInit {
