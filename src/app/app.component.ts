@@ -21,6 +21,7 @@ import { requestInterceptor } from './request.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InitService } from './init.service';
 import { RouterLink } from '@angular/router';
+import { AppNavComponent } from "./app-nav/app-nav.component";
 
 // import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
@@ -32,7 +33,8 @@ import { RouterLink } from '@angular/router';
     RoomsComponent,
     ContainerComponent,
     EmployeeComponent,
-  ],
+    AppNavComponent
+],
   templateUrl: './app.component.html',
   // template:`<h1>Hello World from inline html</h1>
   // <p>This is Vikram</p>`,
@@ -80,8 +82,8 @@ export class AppComponent implements AfterViewInit, OnInit {
     this.loggerService?.log(
       'Logger service instantiated from app.component.ts'
     );
-    this.name_eref_appC.nativeElement.innerText =
-      'Welcome to Hotel Inventory App!';
+    // this.name_eref_appC.nativeElement.innerText =
+    //   'Welcome to Hotel Inventory App!';
     this.localStorage.setItem('AppName', 'Hilton Hotel!');
   }
 }
