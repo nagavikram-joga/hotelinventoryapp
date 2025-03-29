@@ -20,13 +20,15 @@ import { RoomsService } from './rooms/services/rooms.service';
 import { requestInterceptor } from './request.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InitService } from './init.service';
+import { RouterLink } from '@angular/router';
 
 // import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 @Component({
   selector: 'hinv-root',
   imports: [
-    // RouterOutlet,
+    RouterOutlet,
+    RouterLink,
     RoomsComponent,
     ContainerComponent,
     EmployeeComponent,
