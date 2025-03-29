@@ -1,19 +1,24 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  inject,
+  provideAppInitializer,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import {
-  HTTP_INTERCEPTORS,
-  provideHttpClient,
-  withInterceptors,
-} from '@angular/common/http';
-import { requestInterceptor } from './request.interceptor';
+import { provideHttpClient } from '@angular/common/http';
+import { InitService } from './init.service';
+import { firstValueFrom } from 'rxjs';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    // provideHttpClient(),
-    provideHttpClient(withInterceptors([requestInterceptor])),
+    provideHttpClient(),
+    provideAppInitializer(() => {
+      const initService = inject(InitService);
+      return firstValueFrom(initService.init()); // ✅ Directly returns a Promise
+    }),
   ],
 };

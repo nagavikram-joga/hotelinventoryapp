@@ -19,6 +19,7 @@ import { LocalstorageToken } from '../localstoorage.token';
 import { RoomsService } from './rooms/services/rooms.service';
 import { requestInterceptor } from './request.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InitService } from './init.service';
 
 // import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
@@ -67,8 +68,12 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   constructor(
     @Optional() private loggerService: LoggerService,
-    @Inject(LocalstorageToken) private localStorage: Storage
-  ) {}
+    @Inject(LocalstorageToken) private localStorage: Storage,
+    private initService: InitService
+  ) {
+    console.log('Inside app.component.ts constructor');
+    console.log(this.initService.config);
+  }
   ngOnInit(): void {
     this.loggerService?.log(
       'Logger service instantiated from app.component.ts'
