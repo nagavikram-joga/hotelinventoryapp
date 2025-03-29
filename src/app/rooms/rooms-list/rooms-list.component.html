@@ -28,8 +28,14 @@
     <td>{{ room.rating | number : "1.0-2" }}</td>
     <!-- 1.2 resembles 1 digit before the decimal point and 2 digits after decimal point  -->
     <td>
-      <button class="btn btn-primary" (click)="selectRoom_RLC(room)">
+      <!-- <button class="btn btn-primary" (click)="selectRoom_RLC(room)">
         Select
+      </button> -->
+      <button
+        [routerLink]="['/rooms', room.roomNumber]"
+        class="btn btn-primary"
+      >
+        Book Now
       </button>
     </td>
   </tr>

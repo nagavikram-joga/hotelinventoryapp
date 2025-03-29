@@ -19,6 +19,7 @@ import {
   // NgIf,
   NgFor,
 } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'hinv-rooms-list',
@@ -29,6 +30,7 @@ import {
     LowerCasePipe,
     CurrencyPipe,
     DecimalPipe,
+    RouterLink,
     // NgIf,
     NgFor,
   ],
